@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CatController {
 
     @PostMapping
-    public ResponseEntity<Response> cat() {
-        return ResponseEntity.ok(new Response("cat"));
+    public ResponseEntity<String> cat() {
+        return ResponseEntity.ok("worked\ntest");
     }
 }
