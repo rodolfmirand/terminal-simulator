@@ -1,4 +1,4 @@
-package TerminalSimulator.models;
+package TerminalSimulator.models.dto.response;
 
 public class Response {
 
