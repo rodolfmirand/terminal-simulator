@@ -3,6 +3,7 @@ package TerminalSimulator.services;
 import TerminalSimulator.Application;
 import TerminalSimulator.models.Directory;
 import TerminalSimulator.models.dto.request.Request;
+import TerminalSimulator.models.dto.response.Response;
 import TerminalSimulator.services.interfaces.CommandService;
 import org.springframework.stereotype.Service;
 
@@ -10,27 +11,42 @@ import org.springframework.stereotype.Service;
 public class CdService implements CommandService {
 
     @Override
-    public String exectute(Request request) {
+    public Response execute(Request request) {
+        if(request.args.length <= 1){
+            return new Response("No args found", request.path);
+        }
+
         String commandArg = request.args[1];
-        if(commandArg.equals("/")) return "/";
+
+        if(commandArg.equals("/")) return new Response("", "/");
+
         if(commandArg.contains("..")){
             String[] dots = request.args[1].split("/");
             String[] dirs = request.path.split("/");
-            if(dots.length > dirs.length){
-                return "/";
+            if(dots.length >= dirs.length){
+                return new Response("", "root/");
             }
-            return Application.database.findDirectory(Application.database.getRoot(), dirs[dirs.length-dots.length]).getName();
-        }
-        String[] path = request.path.split("/");
-        Directory dir = Application.database.findDirectory(Application.database.getRoot(), path[path.length - 1]);
-        boolean dirExists = false;
-        for(Directory d : dir.getDirectories()){
-            if (d.getName().equals(request.args[1])) {
-                dirExists = true;
-                break;
+
+            Directory currentDir = Application.database.findDirectory(dirs[dirs.length - 1]);
+            for (int i = dots.length; i > 0; i--){
+                currentDir = currentDir.getParent();
             }
+            return new Response("", currentDir.getPath());
         }
 
-        return dirExists ? request.path + "/" + dir.getName() : "Directory not found";
+        Directory dir;
+        if(request.path.equals("/")){
+            dir = Application.database.getRoot();
+        }else{
+            String[] path = request.path.split("/");
+            dir = Application.database.findDirectory(path[path.length - 1]);
+        }
+
+        for(Directory d : dir.getDirectories()){
+            if (d.getName().equals(request.args[1])) {
+                return new Response("", d.getPath());
+            }
+        }
+        return new Response("", dir.getPath());
     }
 }
