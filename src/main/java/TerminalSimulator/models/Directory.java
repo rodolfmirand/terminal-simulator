@@ -12,7 +12,7 @@ public class Directory {
     private Directory parent;
 
     public Directory(String path, String name, Directory parent) {
-        this.path = path + "/" + name;
+        this.path = path;
         this.name = name;
         this.files = new ArrayList<>();
         this.directories = new ArrayList<>();
