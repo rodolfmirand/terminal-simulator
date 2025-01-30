@@ -8,7 +8,7 @@ public class Database {
         private Directory root;
 
         public Database () {
-            this.root = new Directory("", "root", null);
+            this.root = new Directory("root/", "root", null);
         }
 
         public Directory getRoot(){
@@ -56,7 +56,11 @@ public class Database {
             }
         }
 
-        public Directory findDirectory(Directory current, String name){
+        public Directory findDirectory(String name){
+            return findDirectory(root, name);
+        }
+
+        private Directory findDirectory(Directory current, String name){
             if(current.getName().equals(name))
                 return current;
 
