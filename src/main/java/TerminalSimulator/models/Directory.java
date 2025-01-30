@@ -9,12 +9,14 @@ public class Directory {
     private String name;
     private List<File> files;
     private List<Directory> directories;
+    private Directory parent;
 
-    public Directory(String path, String name) {
+    public Directory(String path, String name, Directory parent) {
         this.path = path + "/" + name;
         this.name = name;
         this.files = new ArrayList<>();
         this.directories = new ArrayList<>();
+        this.parent = parent;
     }
 
     public void addFile(File file){
@@ -64,5 +66,13 @@ public class Directory {
 
     public List<Directory> getDirectories() {
         return directories;
+    }
+
+    public Directory getParent() {
+        return parent;
+    }
+
+    public void setParent(Directory parent) {
+        this.parent = parent;
     }
 }
