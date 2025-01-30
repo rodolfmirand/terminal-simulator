@@ -1,6 +1,7 @@
 package TerminalSimulator.controllers;
 
 import TerminalSimulator.models.dto.request.Request;
+import TerminalSimulator.models.dto.response.Response;
 import TerminalSimulator.services.CdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,8 @@ public class CdController {
     @Autowired
     private CdService service;
 
-    @PostMapping(path = "/cd")
-    public ResponseEntity<String> cdController(@RequestBody Request request){
-        return ResponseEntity.ok(this.service.exectute(request));
+    @PostMapping()
+    public ResponseEntity<Response> cd(@RequestBody Request request){
+        return ResponseEntity.ok(this.service.execute(request));
     }
 }
