@@ -4,7 +4,18 @@ public class Response {
 
     private String message;
 
-    public Response(String message) {
+    private String path;
+
+    public Response(String message, String path) {
         this.message = message;
+        this.path = path;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getPath() {
+        return path;
     }
 }
