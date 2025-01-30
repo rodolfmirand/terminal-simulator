@@ -1,5 +1,7 @@
 package TerminalSimulator.services.interfaces;
 
+import TerminalSimulator.models.dto.request.Request;
+
 public interface CommandService {
-    void exectute(String[] args);
+    String exectute(Request request);
 }
