@@ -3,6 +3,8 @@ package TerminalSimulator.repository;
 import TerminalSimulator.models.Directory;
 import TerminalSimulator.models.File;
 
+import java.util.ArrayList;
+
 public class Database {
 
         private Directory root;
@@ -15,8 +17,8 @@ public class Database {
             return root;
         }
 
-        public void createDirectory(String parentName, String name){
-            Directory parent = findDirectory(root, parentName);
+        public void createDirectory(ArrayList<String> path, String name){
+            Directory parent = findDirectory(root, path);
             if(parent != null){
                 parent.addDirectory(new Directory(parent.getPath(), name, parent));
             }else{
@@ -24,8 +26,8 @@ public class Database {
             }
         }
 
-        public void createFile(String parentName, String name, String data) {
-            Directory parent = findDirectory(root, parentName);
+        public void createFile(ArrayList<String> path, String name, String data) {
+            Directory parent = findDirectory(root, path);
             if(parent != null){
                 parent.addFile(new File(parent.getPath(), name, data));
             }
@@ -47,8 +49,8 @@ public class Database {
             }
         }
 
-        public void removeFile(String parentName, String name){
-            Directory parent = findDirectory(root, parentName);
+        public void removeFile(ArrayList<String> path, String name){
+            Directory parent = findDirectory(root, path);
             for(File file : parent.getFiles()){
                 if(file.getName().equals(name)){
                     parent.removeFile(name);
@@ -56,18 +58,21 @@ public class Database {
             }
         }
 
-        public Directory findDirectory(String name){
-            return findDirectory(root, name);
+        public Directory findDirectory(ArrayList<String> path){
+            return findDirectory(root, path);
         }
 
-        private Directory findDirectory(Directory current, String name){
-            if(current.getName().equals(name))
+        private Directory findDirectory(Directory current, ArrayList<String> path){
+            if(path.size() == 1){
                 return current;
-
-            for(Directory childDir : current.getDirectories()){
-                Directory found = findDirectory(childDir, name);
-                if(found != null) return found;
+            }
+            for(Directory child : current.getDirectories()){
+                if(child.getName().equals(path.get(1))){
+                    path.removeFirst();
+                    return findDirectory(child, path);
+                }
             }
             return null;
         }
+
 }
