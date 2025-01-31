@@ -7,27 +7,36 @@ import TerminalSimulator.models.dto.response.Response;
 import TerminalSimulator.services.interfaces.CommandService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class MkDirService implements CommandService {
 
     @Override
     public Response execute(Request request) {
-        String dirName = request.args[1];
-        String currentDirName;
-        String currentPath = request.path;
-
-        if(currentPath.equals("root/")){
-            currentDirName = "root";
-        }else{
-            String[] path = currentPath.split("/");
-            currentDirName = path[path.length - 1];
+        if(request.args.length < 1){
+            return new Response("Empty directory name.", request.path);
         }
 
-        Directory currentDir = Application.database.findDirectory(currentDirName);
+        String dirName = request.args[1];
+
+        if(dirName.isEmpty()){
+            return new Response("Empty directory name.", request.path);
+        }
+
+        Directory currentDir = Application.database.findDirectory(new ArrayList<>(List.of(request.path.split("/"))));
+
+        for (Directory child : currentDir.getDirectories()){
+            if(child.getName().equals(dirName)){
+                return new Response("Directory already exists!", request.path);
+            }
+        }
+
         Directory newDir = new Directory(currentDir.getPath() + dirName + "/", dirName, currentDir);
 
         currentDir.addDirectory(newDir);
 
-        return new Response("Directory created '" + newDir.getPath() + "'",  request.path);
+        return new Response("Directory created '" + newDir.getPath() + "'.",  request.path);
     }
 }
