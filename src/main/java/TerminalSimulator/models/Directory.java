@@ -1,6 +1,7 @@
 package TerminalSimulator.models;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Directory {
@@ -10,6 +11,8 @@ public class Directory {
     private List<File> files;
     private List<Directory> directories;
     private Directory parent;
+    private Date creationDate;
+    private String owner;
 
     public Directory(String path, String name, Directory parent) {
         this.path = path;
@@ -17,27 +20,28 @@ public class Directory {
         this.files = new ArrayList<>();
         this.directories = new ArrayList<>();
         this.parent = parent;
+        this.creationDate = new Date();
     }
 
-    public void addFile(File file){
+    public void addFile(File file) {
         this.files.add(file);
     }
 
-    public void addDirectory(Directory directory){
+    public void addDirectory(Directory directory) {
         this.directories.add(directory);
     }
 
-    public void removeDirectory(String name){
+    public void removeDirectory(String name) {
         this.directories.removeIf(childDir -> childDir.getName().equals(name));
     }
 
-    public void removeFile(String name){
+    public void removeFile(String name) {
         this.files.removeIf(childDir -> childDir.getName().equals(name));
     }
 
-    public Directory findChildDirectory(String name){
-        for(Directory childDir : this.directories){
-            if(childDir.getName().equals(name)){
+    public Directory findChildDirectory(String name) {
+        for (Directory childDir : this.directories) {
+            if (childDir.getName().equals(name)) {
                 return childDir;
             }
         }

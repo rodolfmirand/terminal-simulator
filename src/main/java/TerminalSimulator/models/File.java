@@ -5,11 +5,13 @@ public class File {
     private String path;
     private String name;
     private String data;
+    private String owner;
 
-    public File(String path, String name, String data){
+    public File(String path, String name, String data, String owner){
         this.path = path + "/" + name;
         this.name = name;
         this.data = data;
+        this.owner = owner;
     }
 
     public File(String path, String name) {
