@@ -1,17 +1,21 @@
 package TerminalSimulator.models;
 
+import java.util.Date;
+
 public class File {
 
     private String path;
     private String name;
     private String data;
     private String owner;
+    private Date creatinDate;
 
     public File(String path, String name, String data, String owner){
         this.path = path + "/" + name;
         this.name = name;
         this.data = data;
         this.owner = owner;
+        this.creatinDate = new Date();
     }
 
     public File(String path, String name) {
