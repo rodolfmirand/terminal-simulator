@@ -12,16 +12,15 @@ import TerminalSimulator.models.dto.response.Response;
 import TerminalSimulator.services.FindService;
 import TerminalSimulator.services.TouchService;
 
+@RestController
+@RequestMapping(path = "/find")
 public class FindController {
-	@RestController
-	@RequestMapping(path = "/find")
-	public class TouchController {
-		
-		@Autowired
-		private FindService service;
-		
-		@PostMapping()
-	    public ResponseEntity<Response> find(@RequestBody Request request){
-	        return ResponseEntity.ok(this.service.execute(request));
-	    }
+
+    @Autowired
+    private FindService service;
+
+    @PostMapping()
+    public ResponseEntity<Response> find(@RequestBody Request request) {
+        return ResponseEntity.ok(this.service.execute(request));
+    }
 }
