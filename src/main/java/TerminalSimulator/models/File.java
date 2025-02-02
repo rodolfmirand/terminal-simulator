@@ -9,11 +9,11 @@ public class File {
     private String data;
     private String owner;
     private Date creatinDate;
+    private int bytesSize;
 
-    public File(String path, String name, String data, String owner){
+    public File(String path, String name, String owner){
         this.path = path + "/" + name;
         this.name = name;
-        this.data = data;
         this.owner = owner;
         this.creatinDate = new Date();
     }
@@ -21,7 +21,7 @@ public class File {
     public File(String path, String name) {
         this.path = path + "/" + name;
     }
-
+    
     public String getPath() {
         return path;
     }
@@ -44,5 +44,9 @@ public class File {
 
     public void setData(String data) {
         this.data = data;
+    }
+    
+    public void setBytesSize() {
+    	this.bytesSize = this.data.length() * 8;
     }
 }
