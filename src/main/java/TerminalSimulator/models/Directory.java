@@ -47,6 +47,16 @@ public class Directory {
         }
         return null;
     }
+    
+    public File findFile(String name) {
+    	for(File file : this.files) {
+    		if(file.getName().equals(name)) {
+    			return file;
+    		}
+    	}
+    	
+    	return null;
+    }
 
     public String getPath() {
         return path;
