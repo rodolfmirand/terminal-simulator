@@ -18,7 +18,7 @@ public class EchoController {
 	private EchoService service;
 	
 	@PostMapping
-    public ResponseEntity<Response> rmDir(@RequestBody Request request){
+    public ResponseEntity<Response> echo(@RequestBody Request request){
         return ResponseEntity.ok(this.service.execute(request));
     }
 }
