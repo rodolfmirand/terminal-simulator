@@ -37,13 +37,6 @@ public class Database {
         }
     }
 
-    public void createFile(ArrayList<String> path, String name, String data, String owner) {
-        Directory parent = findDirectory(root, path);
-        if (parent != null) {
-            parent.addFile(new File(parent.getPath(), name, data, owner));
-        }
-    }
-
     public void removeDirectory(String name) {
         if (root.getName().equals(name)) {
             System.out.println("Impossible to remove root directory!");
