@@ -21,7 +21,7 @@ public class FindService implements CommandService {
 			return new Response("No args found", request.path);
         }
 		
-		if(request.args[2] != "-name") {
+		if(!request.args[2].equals("-name")) {
 			return new Response("The -name flag is mandatory" , request.path);
 		}
 		
@@ -29,9 +29,9 @@ public class FindService implements CommandService {
 		File file = currentDir.findFile(request.args[3]);
 		
 		if(file == null) {
-			return new Response("The file named as " + request.args[3] + "doesn't exists", null);
+			return new Response("The file named as " + request.args[3] + " doesn't exists", request.path);
 		}
 		
-		return new Response("The file named as " + request.args[3] + "was found", null);
+		return new Response("The file named as " + request.args[3] + " was found", request.path);
 	}
 }
