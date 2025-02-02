@@ -21,7 +21,7 @@ public class Database {
     }
 
     public Database() {
-        this.root = new Directory("root/", "root", null);
+        this.root = new Directory("root", null);
     }
 
     public Directory getRoot() {
@@ -31,7 +31,7 @@ public class Database {
     public void createDirectory(ArrayList<String> path, String name) {
         Directory parent = findDirectory(root, path);
         if (parent != null) {
-            parent.addDirectory(new Directory(parent.getPath(), name, parent));
+            parent.addDirectory(new Directory(name, parent));
         } else {
             System.out.println("Directory not found!");
         }
@@ -78,5 +78,4 @@ public class Database {
         }
         return null;
     }
-
 }
