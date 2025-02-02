@@ -21,7 +21,7 @@ public class CdService implements CommandService {
 
         String commandArg = request.args[1];
 
-        if (commandArg.equals("/")) return new Response("", "/");
+        if (commandArg.equals("/")) return new Response("", "root/");
 
         if (commandArg.contains("..")) {
             ArrayList<String> dots = new ArrayList<>(List.of(request.args[1].split("/")));
@@ -50,6 +50,6 @@ public class CdService implements CommandService {
                 return new Response("", d.getPath());
             }
         }
-        return new Response("", dir.getPath());
+        return new Response("Directory not found.", dir.getPath());
     }
 }
