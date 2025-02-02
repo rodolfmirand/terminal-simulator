@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Directory {
 
-    private String path;
     private String name;
     private List<File> files;
     private List<Directory> directories;
@@ -14,8 +13,7 @@ public class Directory {
     private Date creationDate;
     private String owner;
 
-    public Directory(String path, String name, Directory parent) {
-        this.path = path;
+    public Directory(String name, Directory parent) {
         this.name = name;
         this.files = new ArrayList<>();
         this.directories = new ArrayList<>();
@@ -47,23 +45,28 @@ public class Directory {
         }
         return null;
     }
-    
+
     public File findFile(String name) {
-    	for(File file : this.files) {
-    		if(file.getName().equals(name)) {
-    			return file;
-    		}
-    	}
-    	
-    	return null;
+        for (File file : this.files) {
+            if (file.getName().equals(name)) {
+                return file;
+            }
+        }
+
+        return null;
     }
 
     public String getPath() {
+        String path = this.name;
+        Directory parent = this.parent;
+        while (true) {
+            if (parent == null) {
+                break;
+            }
+            path = parent.getName() + "/" + path;
+            parent = parent.getParent();
+        }
         return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public String getName() {
