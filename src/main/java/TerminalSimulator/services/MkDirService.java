@@ -19,21 +19,21 @@ public class MkDirService implements CommandService {
             return new Response("Empty directory name.", request.path);
         }
 
-        String dirName = request.args[1];
+        String newDirName = request.args[1];
 
-        if(dirName.isEmpty()){
+        if(newDirName.isEmpty()){
             return new Response("Empty directory name.", request.path);
         }
 
         Directory currentDir = Application.database.findDirectory(new ArrayList<>(List.of(request.path.split("/"))));
 
         for (Directory child : currentDir.getDirectories()){
-            if(child.getName().equals(dirName)){
+            if(child.getName().equals(newDirName)){
                 return new Response("Directory already exists!", request.path);
             }
         }
 
-        Directory newDir = new Directory(currentDir.getPath() + dirName + "/", dirName, currentDir);
+        Directory newDir = new Directory(newDirName, currentDir);
 
         currentDir.addDirectory(newDir);
 
