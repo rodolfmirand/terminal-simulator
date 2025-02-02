@@ -25,7 +25,7 @@ public class EchoService implements CommandService {
 		File file = currentDir.findFile(request.args[3]);
 		
 		if(file == null) {
-			return new Response("The file named as " + request.args[3] + " doesn't exists", null);
+			return new Response("The file named as " + request.args[3] + " doesn't exists", request.path);
 		}
 		
 		return switch(request.args[2]) {
