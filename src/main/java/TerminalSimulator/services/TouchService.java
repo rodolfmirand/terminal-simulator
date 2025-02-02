@@ -22,7 +22,7 @@ public class TouchService implements CommandService{
         }
 		
 		Directory currentDir = Application.database.findDirectory(new ArrayList<>(List.of(request.path.split("/"))));
-		File emptyFile = new File(request.path, request.args[0], Application.database.getCurrentUser());
+		File emptyFile = new File(request.path, request.args[1], Application.database.getCurrentUser());
 		
 		currentDir.addFile(emptyFile);
 		
