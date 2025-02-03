@@ -4,6 +4,7 @@ import TerminalSimulator.models.Directory;
 import TerminalSimulator.models.File;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Database {
 
@@ -77,5 +78,40 @@ public class Database {
             }
         }
         return null;
+    }
+
+    public String tree() {
+        StringBuilder builder = new StringBuilder();
+        buildTreeString(root, "", true, builder);
+        return builder.toString();
+    }
+
+    private void buildTreeString(Directory directory, String prefix, boolean isLast, StringBuilder builder) {
+        // Adiciona o nome do diretório atual à StringBuilder
+        builder.append(prefix).append(isLast ? "└── " : "├── ").append(directory.getName()).append("\n");
+
+        // Atualiza o prefixo para os próximos níveis
+        String newPrefix = prefix + (isLast ? "    " : "│   ");
+
+        // Lista os subdiretórios e arquivos
+        List<Directory> subDirs = directory.getDirectories();
+        List<File> files = directory.getFiles();
+
+        int totalItems = subDirs.size() + files.size();
+
+        // Itera sobre os diretórios
+        for (int i = 0; i < subDirs.size(); i++) {
+            boolean lastItem = (i == totalItems - 1 && files.isEmpty());
+            buildTreeString(subDirs.get(i), newPrefix, lastItem, builder);
+        }
+
+        // Itera sobre os arquivos
+        for (int i = 0; i < files.size(); i++) {
+            boolean lastFile = (i == files.size() - 1);
+            builder.append(newPrefix)
+                    .append(lastFile ? "└── " : "├── ")
+                    .append(files.get(i).getName())
+                    .append("\n");
+        }
     }
 }
