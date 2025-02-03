@@ -22,6 +22,10 @@ public class TouchService implements CommandService{
         }
 		
 		Directory currentDir = Application.database.findDirectory(new ArrayList<>(List.of(request.path.split("/"))));
+		boolean fileExists = currentDir.findFile(request.args[1]) != null;
+		
+		if(fileExists) return new Response("Already exists a file named as " + request.args[1], request.path);
+		
 		File emptyFile = new File(request.path, request.args[1], Application.database.getCurrentUser());
 		
 		currentDir.addFile(emptyFile);
