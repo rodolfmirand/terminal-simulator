@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class File {
 
-    private String path;
+    private Directory parent;
     private String name;
     private String data;
     private String owner;
@@ -12,24 +12,12 @@ public class File {
     private int bytesSize;
     private String permissions;
 
-    public File(String path, String name, String owner){
-        this.path = path + "/" + name;
+    public File(Directory parent, String name, String owner){
+        this.parent = parent;
         this.name = name;
         this.owner = owner;
         this.creatinDate = new Date();
         this.permissions = "rw-rw----";
-    }
-
-    public File(String path, String name) {
-        this.path = path + "/" + name;
-    }
-    
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public String getName() {
