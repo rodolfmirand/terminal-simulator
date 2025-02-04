@@ -38,31 +38,6 @@ public class Database {
         }
     }
 
-    public void removeDirectory(String name) {
-        if (root.getName().equals(name)) {
-            System.out.println("Impossible to remove root directory!");
-            return;
-        }
-        removeDirectory(root, name);
-    }
-
-    private void removeDirectory(Directory parent, String name) {
-        for (Directory childDir : parent.getDirectories()) {
-            if (childDir.getName().equals(name)) {
-                parent.removeDirectory(name);
-            }
-        }
-    }
-
-    public void removeFile(ArrayList<String> path, String name) {
-        Directory parent = findDirectory(root, path);
-        for (File file : parent.getFiles()) {
-            if (file.getName().equals(name)) {
-                parent.removeFile(name);
-            }
-        }
-    }
-
     public Directory findDirectory(ArrayList<String> path) {
         return findDirectory(root, path);
     }
