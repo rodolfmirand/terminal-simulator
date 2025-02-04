@@ -13,12 +13,15 @@ public class Directory {
     private Date creationDate;
     private String owner;
 
+    private String permissions;
+
     public Directory(String name, Directory parent) {
         this.name = name;
         this.files = new ArrayList<>();
         this.directories = new ArrayList<>();
         this.parent = parent;
         this.creationDate = new Date();
+        this.permissions = "rw-rw----";
     }
 
     public void addFile(File file) {
@@ -69,6 +72,16 @@ public class Directory {
         return path;
     }
 
+    public Directory findSubDirectory(String name) {
+        for (Directory directory : this.directories) {
+            if (directory.getName().equals(name)) {
+                return directory;
+            }
+        }
+        return null;
+    }
+
+
     public String getName() {
         return name;
     }
@@ -91,5 +104,8 @@ public class Directory {
 
     public void setParent(Directory parent) {
         this.parent = parent;
+    }
+    public void setPermissions(String permissions) {
+        this.permissions = permissions;
     }
 }

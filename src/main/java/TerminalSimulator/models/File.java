@@ -10,12 +10,14 @@ public class File {
     private String owner;
     private Date creatinDate;
     private int bytesSize;
+    private String permissions;
 
     public File(String path, String name, String owner){
         this.path = path + "/" + name;
         this.name = name;
         this.owner = owner;
         this.creatinDate = new Date();
+        this.permissions = "rw-rw----";
     }
 
     public File(String path, String name) {
@@ -48,5 +50,9 @@ public class File {
     
     public void setBytesSize() {
     	this.bytesSize = this.data.length() * 8;
+    }
+
+    public void setPermissions(String permissions) {
+        this.permissions = permissions;
     }
 }
