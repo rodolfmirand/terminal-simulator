@@ -56,5 +56,5 @@ public class File {
         this.permissions = permissions;
     }
 
-    public void setOwner(String owner) { this.owner = owner}
+    public void setOwner(String owner) { this.owner = owner;}
 }
