@@ -12,7 +12,6 @@ public class Directory {
     private Directory parent;
     private Date creationDate;
     private String owner;
-
     private String permissions;
 
     public Directory(String name, Directory parent) {
@@ -108,4 +107,6 @@ public class Directory {
     public void setPermissions(String permissions) {
         this.permissions = permissions;
     }
+
+    public void setOwner(String owner) { this.owner = owner; }
 }

@@ -18,7 +18,7 @@ public class ChModController {
     private ChModService service;
 
     @PostMapping()
-    public ResponseEntity<Response> cd(@RequestBody Request request){
+    public ResponseEntity<Response> chmod(@RequestBody Request request){
         return ResponseEntity.ok(this.service.execute(request));
     }
 }
