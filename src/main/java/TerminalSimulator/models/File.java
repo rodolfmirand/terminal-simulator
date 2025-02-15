@@ -1,5 +1,6 @@
 package TerminalSimulator.models;
 
+
 import java.util.Date;
 
 public class File {
@@ -9,6 +10,7 @@ public class File {
     private String data;
     private String owner;
     private Date creatinDate;
+    private String group;
     private int bytesSize;
     private String permissions;
 
@@ -45,4 +47,8 @@ public class File {
     }
 
     public void setOwner(String owner) { this.owner = owner;}
+
+    public String toStringLs(){
+        return this.permissions + " " + this.owner + " " + this.group + " " + this.bytesSize +  " " + this.name;
+    }
 }

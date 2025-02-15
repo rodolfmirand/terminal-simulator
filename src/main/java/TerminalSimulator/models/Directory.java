@@ -12,6 +12,8 @@ public class Directory {
     private Directory parent;
     private Date creationDate;
     private String owner;
+    private String group;
+    private int bytesSize;
     private String permissions;
 
     public Directory(String name, Directory parent) {
@@ -20,7 +22,7 @@ public class Directory {
         this.directories = new ArrayList<>();
         this.parent = parent;
         this.creationDate = new Date();
-        this.permissions = "rw-rw----";
+        this.permissions = "drw-rw----";
     }
 
     public void addFile(File file) {
@@ -109,4 +111,8 @@ public class Directory {
     }
 
     public void setOwner(String owner) { this.owner = owner; }
+
+    public String toStringLs(){
+        return this.permissions + " " + this.owner + " " + this.group + " " + this.bytesSize +  " " + this.name;
+    }
 }
