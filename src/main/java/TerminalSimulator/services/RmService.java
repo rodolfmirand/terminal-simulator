@@ -16,7 +16,7 @@ public class RmService implements CommandService {
     @Override
     public Response execute(Request request) {
         if (request.args.length < 2) {
-            return new Response("No file or directory specified", request.path);
+            return new Response("No file or directory specified.", request.path);
         }
 
         boolean recursive = false;
@@ -25,7 +25,7 @@ public class RmService implements CommandService {
         // Verificar se o argumento -r foi passado
         if (targetName.equals("-r")) {
             if (request.args.length < 3) {
-                return new Response("No directory specified for recursive deletion", request.path);
+                return new Response("No directory specified for recursive deletion.", request.path);
             }
             recursive = true;
             targetName = request.args[2];
@@ -45,24 +45,18 @@ public class RmService implements CommandService {
             if (!removed) {
                 return new Response("Failed to remove file: " + targetName, request.path);
             }
-            return new Response("File removed successfully: " + targetName, request.path);
+            return new Response("File deleted.", request.path);
         } else if (dir != null) {
             // Remover diretório somente se for recursivo
             if (!recursive) {
                 return new Response("Cannot remove directory without -r flag", request.path);
             }
 
-            // Se o diretório removido for o atual, mover para o diretório pai antes da remoção
-            if (currentDir.getName().equals(targetName)) {
-                currentDir = currentDir.getParent();
-                request.path = currentDir.getPath();
-            }
-
             boolean removed = currentDir.removeDirectory(targetName);
             if (!removed) {
                 return new Response("Failed to remove directory: " + targetName, request.path);
             }
-            return new Response("Directory removed successfully: " + targetName, request.path);
+            return new Response("Directory deleted.", request.path);
         }
 
         return new Response("File or directory not found: " + targetName, request.path);
