@@ -13,6 +13,8 @@ public class Directory {
     private Date creationDate;
     private String owner;
     private String permissions;
+    private String group;
+    private int bytesSize;
 
     public Directory(String name, Directory parent) {
         this.name = name;
@@ -20,7 +22,7 @@ public class Directory {
         this.directories = new ArrayList<>();
         this.parent = parent;
         this.creationDate = new Date();
-        this.permissions = "rw-rw----";
+        this.permissions = "drw-rw----";
     }
 
     public void addFile(File file) {
@@ -87,6 +89,7 @@ public class Directory {
         return name;
     }
 
+
     public void setName(String name) {
         this.name = name;
     }
@@ -112,7 +115,12 @@ public class Directory {
 
     public void setOwner(String owner) { this.owner = owner; }
 
+    public String toStringLs(){
+        return this.permissions + " " + this.owner + " " + this.group + " " + this.bytesSize +  " " + this.name;
+    }
 
-
+    public int getBytesSize() {
+        return this.bytesSize;
+    }
 
 }

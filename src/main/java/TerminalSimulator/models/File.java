@@ -4,33 +4,21 @@ import java.util.Date;
 
 public class File {
 
-    private String path;
+    private Directory parent;
     private String name;
     private String data;
     private String owner;
     private Date creatinDate;
+    private String group;
     private int bytesSize;
     private String permissions;
 
-
-    public File(String path, String name, String owner){
-        this.path = path + "/" + name;
+    public File(Directory parent, String name, String owner){
+        this.parent = parent;
         this.name = name;
         this.owner = owner;
         this.creatinDate = new Date();
         this.permissions = "rw-rw----";
-    }
-
-    public File(String path, String name) {
-        this.path = path + "/" + name;
-    }
-    
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public String getName() {
@@ -48,9 +36,9 @@ public class File {
     public void setData(String data) {
         this.data = data;
     }
-    
+
     public void setBytesSize() {
-    	this.bytesSize = this.data.length() * 8;
+        this.bytesSize = this.data.length() * 8;
     }
 
     public void setPermissions(String permissions) {
@@ -58,6 +46,7 @@ public class File {
     }
 
     public void setOwner(String owner) { this.owner = owner;}
-
-
+    public String toStringLs(){
+        return this.permissions + " " + this.owner + " " + this.group + " " + this.bytesSize +  " " + this.name;
+    }
 }

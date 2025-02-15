@@ -21,12 +21,20 @@ public class CatService implements CommandService {
             return new Response("No file specified", request.path);
         }
 
-        Directory currentDir = Application.database.findDirectory(new ArrayList<>(List.of(request.path.split("/"))));
+        Directory currentDir = Application.database.findDirectory(
+                new ArrayList<>(List.of(request.path.split("/")))
+        );
 
         File file = currentDir.findFile(request.args[1]);
 
-        if (file == null) return new Response("File not found: " + request.args[1], request.path);
+        if (file == null) {
+            return new Response("File not found: " + request.args[1], request.path);
+        }
 
-        return new Response("File Content:\n" + file.getData(), request.path);
+        String formattedContent = file.getData().replace("\\n", "\n").replaceAll("\n", "<br>");
+
+
+        return new Response("File Content:<br>" + formattedContent, request.path);
     }
 }
+
