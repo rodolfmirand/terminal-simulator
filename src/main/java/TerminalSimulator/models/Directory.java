@@ -115,4 +115,8 @@ public class Directory {
     public String toStringLs(){
         return this.permissions + " " + this.owner + " " + this.group + " " + this.bytesSize +  " " + this.name;
     }
+
+    public int getBytesSize() {
+        return this.bytesSize;
+    }
 }
