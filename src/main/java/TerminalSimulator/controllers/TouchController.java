@@ -20,7 +20,6 @@ public class TouchController {
 	
 	@PostMapping()
     public ResponseEntity<Response> touch(@RequestBody Request request){
-		System.out.print("Entrei");
         return ResponseEntity.ok(this.service.execute(request));
     }
 }

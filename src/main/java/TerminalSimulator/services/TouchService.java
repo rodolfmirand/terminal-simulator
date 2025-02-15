@@ -26,7 +26,7 @@ public class TouchService implements CommandService{
 		
 		if(fileExists) return new Response("Already exists a file named as " + request.args[1], request.path);
 		
-		File emptyFile = new File(request.path, request.args[1], Application.database.getCurrentUser());
+		File emptyFile = new File(currentDir, request.args[1], Application.database.getCurrentUser());
 		
 		currentDir.addFile(emptyFile);
 		
