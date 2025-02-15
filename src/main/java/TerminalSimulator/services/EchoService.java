@@ -17,11 +17,17 @@ public class EchoService implements CommandService {
 
 	@Override
 	public Response execute(Request request) {
+		// Se tiver apenas um argumento exibe a mensagem no terminal
+		if(request.args.length == 2) {
+			return new Response(request.args[1], request.path);
+		}
+		
 		if(request.args.length < 4) {
 			return new Response("No args found", request.path);
         }
 		
-		Directory currentDir = Application.database.findDirectory(new ArrayList<>(List.of(request.args[2])));
+		// Do contrário insere informação em arquivo
+		Directory currentDir = Application.database.findDirectory(new ArrayList<>(List.of(request.path)));
 		File file = currentDir.findFile(request.args[3]);
 		
 		if(file == null) {
