@@ -31,12 +31,14 @@ public class Directory {
         this.directories.add(directory);
     }
 
-    public void removeDirectory(String name) {
+    public boolean removeDirectory(String name) {
         this.directories.removeIf(childDir -> childDir.getName().equals(name));
+        return true;
     }
 
-    public void removeFile(String name) {
+    public boolean removeFile(String name) {
         this.files.removeIf(childDir -> childDir.getName().equals(name));
+        return true;
     }
 
     public Directory findChildDirectory(String name) {
@@ -98,7 +100,7 @@ public class Directory {
     }
 
     public Directory getParent() {
-        return parent;
+        return this.parent;
     }
 
     public void setParent(Directory parent) {
@@ -109,4 +111,8 @@ public class Directory {
     }
 
     public void setOwner(String owner) { this.owner = owner; }
+
+
+
+
 }

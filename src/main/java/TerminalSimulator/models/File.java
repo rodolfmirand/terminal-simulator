@@ -12,6 +12,7 @@ public class File {
     private int bytesSize;
     private String permissions;
 
+
     public File(String path, String name, String owner){
         this.path = path + "/" + name;
         this.name = name;
@@ -56,5 +57,7 @@ public class File {
         this.permissions = permissions;
     }
 
-    public void setOwner(String owner) { this.owner = owner}
+    public void setOwner(String owner) { this.owner = owner;}
+
+
 }

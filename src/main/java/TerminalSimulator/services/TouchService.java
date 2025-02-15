@@ -17,7 +17,7 @@ public class TouchService implements CommandService{
 
 	@Override
 	public Response execute(Request request) {
-		if (request.args.length < 1) {
+		if (request.args.length < 2) {
             return new Response("No args found", request.path);
         }
 		
