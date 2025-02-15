@@ -25,13 +25,14 @@ public class WcService implements CommandService {
             return new Response("File not found: " + request.args[1], request.path);
         }
 
-        String content = file.getData();
-        int lineCount = content.split("\n").length;
-        int wordCount = content.split("\\s+").length;
-        int charCount = content.length();
+        String content = file.getData().replace("\\n", "\n").replaceAll("\r\n|\n", "<br>");
+        String[] lines = content.split("<br>");
+        int lineCount = lines.length;
+        int wordCount = content.replaceAll("<br>", " ").split("\\s+").length;
+        int charCount = content.replaceAll("<br>", "").length();
 
-        String output = "lines: " + lineCount + "\n" +
-                "words: " + wordCount + "\n" +
+        String output = "lines: " + lineCount + "<br>" +
+                "words: " + wordCount + "<br>" +
                 "characters: " + charCount;
 
         return new Response(output, request.path);
