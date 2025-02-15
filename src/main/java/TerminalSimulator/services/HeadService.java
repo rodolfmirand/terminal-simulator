@@ -22,7 +22,7 @@ public class HeadService implements CommandService {
         int linesToShow;
 
         try {
-            linesToShow = Integer.parseInt(request.args[2]);
+            linesToShow = Integer.parseInt(request.args[1]);
             if (linesToShow < 1) {
                 return new Response("Invalid number of lines", request.path);
             }
@@ -31,13 +31,15 @@ public class HeadService implements CommandService {
         }
 
         Directory currentDir = Application.database.findDirectory(new ArrayList<>(List.of(request.path.split("/"))));
-        File file = currentDir.findFile(request.args[1]);
+        File file = currentDir.findFile(request.args[2]);
         if (file == null) {
-            return new Response("File not found: " + request.args[1], request.path);
+            return new Response("File not found.", request.path);
         }
 
-        String[] lines = file.getData().split("\n");
-        StringBuilder output = new StringBuilder("Head of file: " + request.args[1] + "\n");
+        String formattedContent = file.getData().replace("\\n", "\n").replaceAll("\r\n|\n", "<br>");
+        String[] lines = formattedContent.split("<br>");
+
+        StringBuilder output = new StringBuilder();
         for (int i = 0; i < Math.min(linesToShow, lines.length); i++) {
             output.append(lines[i]).append("\n");
         }
