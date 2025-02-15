@@ -22,7 +22,7 @@ public class TailService implements CommandService {
         int linesToShow;
 
         try {
-            linesToShow = Integer.parseInt(request.args[2]);
+            linesToShow = Integer.parseInt(request.args[1]);
             if (linesToShow < 1) {
                 return new Response("Invalid number of lines", request.path);
             }
@@ -31,12 +31,13 @@ public class TailService implements CommandService {
         }
 
         Directory currentDir = Application.database.findDirectory(new ArrayList<>(List.of(request.path.split("/"))));
-        File file = currentDir.findFile(request.args[1]);
+        File file = currentDir.findFile(request.args[2]);
         if (file == null) {
-            return new Response("File not found: " + request.args[1], request.path);
+            return new Response("File not found.", request.path);
         }
 
-        String[] lines = file.getData().split("\n");
+        String formattedContent = file.getData().replace("\\n", "\n").replaceAll("\r\n|\n", "<br>");
+        String[] lines = formattedContent.split("<br>");
         StringBuilder output = new StringBuilder();
 
         int startIndex = Math.max(0, lines.length - linesToShow);
