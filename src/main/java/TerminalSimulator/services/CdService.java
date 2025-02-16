@@ -15,41 +15,50 @@ public class CdService implements CommandService {
 
     @Override
     public Response execute(Request request) {
+
+        // verifica a ausência de argumentos
         if (request.args.length <= 1) {
             return new Response("No args found", request.path);
         }
 
+        // armazena o argumento do comando
         String commandArg = request.args[1];
 
-        if (commandArg.equals("/")) return new Response("", "root/");
+        // caso o argumento seja "/", retorna o diretório raíz
+        if (commandArg.equals("/")) {
+            return new Response("", "root/");
+        }
 
+        // armazena o caminho atual
+        ArrayList<String> dirs = new ArrayList<>(List.of(request.path.split("/")));
+
+        // busca na árvore o diretório atual
+        Directory currentDir = Application.database.findDirectory(dirs);
+
+        // caso o argumento seja "..", retorna quantos diretórios foram requisitados
         if (commandArg.contains("..")) {
-            ArrayList<String> dots = new ArrayList<>(List.of(request.args[1].split("/")));
-            ArrayList<String> dirs = new ArrayList<>(List.of(request.path.split("/")));
-            if (dots.size() >= dirs.size()) {
-                return new Response("", "root/");
-            }
 
-            Directory currentDir = Application.database.findDirectory(dirs);
-            for (int i = dots.size(); i > 0; i--) {
+            // armazena a quantidade de diretórios a serem retornados
+            int dots = request.args[1].split("/").length;
+
+            // retorna os diretórios
+            for (int i = dots; i > 0 && currentDir.getParent() != null; i--) {
                 currentDir = currentDir.getParent();
             }
+
             return new Response("", currentDir.getPath());
         }
 
-        Directory dir;
-        if (request.path.equals("/")) {
-            dir = Application.database.getRoot();
-        } else {
-            ArrayList<String> path = new ArrayList<>(List.of(request.path.split("/")));
-            dir = Application.database.findDirectory(path);
-        }
+        // procura no diretório atual o diretório a ser encontrado
+        Directory targetDir = currentDir.getDirectories()
+                .stream()
+                .filter(d -> d.getName().equals(commandArg))
+                .findFirst()
+                .orElse(null);
 
-        for (Directory d : dir.getDirectories()) {
-            if (d.getName().equals(request.args[1])) {
-                return new Response("", d.getPath());
-            }
-        }
-        return new Response("Directory not found.", dir.getPath());
+        // caso o diretório exista, ele é retornado
+        return (targetDir != null)
+                ? new Response("", targetDir.getPath())
+                : new Response("Directory not found.", currentDir.getPath());
     }
 }
