@@ -38,31 +38,6 @@ public class Database {
         }
     }
 
-    public void removeDirectory(String name) {
-        if (root.getName().equals(name)) {
-            System.out.println("Impossible to remove root directory!");
-            return;
-        }
-        removeDirectory(root, name);
-    }
-
-    private void removeDirectory(Directory parent, String name) {
-        for (Directory childDir : parent.getDirectories()) {
-            if (childDir.getName().equals(name)) {
-                parent.removeDirectory(name);
-            }
-        }
-    }
-
-    public void removeFile(ArrayList<String> path, String name) {
-        Directory parent = findDirectory(root, path);
-        for (File file : parent.getFiles()) {
-            if (file.getName().equals(name)) {
-                parent.removeFile(name);
-            }
-        }
-    }
-
     public Directory findDirectory(ArrayList<String> path) {
         return findDirectory(root, path);
     }
@@ -87,25 +62,20 @@ public class Database {
     }
 
     private void buildTreeString(Directory directory, String prefix, boolean isLast, StringBuilder builder) {
-        // Adiciona o nome do diretório atual à StringBuilder
         builder.append(prefix).append(isLast ? "└── " : "├── ").append(directory.getName()).append("\n");
 
-        // Atualiza o prefixo para os próximos níveis
         String newPrefix = prefix + (isLast ? "    " : "│   ");
 
-        // Lista os subdiretórios e arquivos
         List<Directory> subDirs = directory.getDirectories();
         List<File> files = directory.getFiles();
 
         int totalItems = subDirs.size() + files.size();
 
-        // Itera sobre os diretórios
         for (int i = 0; i < subDirs.size(); i++) {
             boolean lastItem = (i == totalItems - 1 && files.isEmpty());
             buildTreeString(subDirs.get(i), newPrefix, lastItem, builder);
         }
 
-        // Itera sobre os arquivos
         for (int i = 0; i < files.size(); i++) {
             boolean lastFile = (i == files.size() - 1);
             builder.append(newPrefix)

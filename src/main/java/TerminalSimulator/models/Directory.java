@@ -12,6 +12,9 @@ public class Directory {
     private Directory parent;
     private Date creationDate;
     private String owner;
+    private String permissions;
+    private String group;
+    private int bytesSize;
 
     public Directory(String name, Directory parent) {
         this.name = name;
@@ -19,6 +22,7 @@ public class Directory {
         this.directories = new ArrayList<>();
         this.parent = parent;
         this.creationDate = new Date();
+        this.permissions = "drw-rw----";
     }
 
     public void addFile(File file) {
@@ -29,12 +33,14 @@ public class Directory {
         this.directories.add(directory);
     }
 
-    public void removeDirectory(String name) {
+    public boolean removeDirectory(String name) {
         this.directories.removeIf(childDir -> childDir.getName().equals(name));
+        return true;
     }
 
-    public void removeFile(String name) {
+    public boolean removeFile(String name) {
         this.files.removeIf(childDir -> childDir.getName().equals(name));
+        return true;
     }
 
     public Directory findChildDirectory(String name) {
@@ -69,9 +75,20 @@ public class Directory {
         return path;
     }
 
+    public Directory findSubDirectory(String name) {
+        for (Directory directory : this.directories) {
+            if (directory.getName().equals(name)) {
+                return directory;
+            }
+        }
+        return null;
+    }
+
+
     public String getName() {
         return name;
     }
+
 
     public void setName(String name) {
         this.name = name;
@@ -86,10 +103,24 @@ public class Directory {
     }
 
     public Directory getParent() {
-        return parent;
+        return this.parent;
     }
 
     public void setParent(Directory parent) {
         this.parent = parent;
     }
+    public void setPermissions(String permissions) {
+        this.permissions = permissions;
+    }
+
+    public void setOwner(String owner) { this.owner = owner; }
+
+    public String toStringLs(){
+        return this.permissions + " " + this.owner + " " + this.group + " " + this.bytesSize +  " " + this.name;
+    }
+
+    public int getBytesSize() {
+        return this.bytesSize;
+    }
+
 }

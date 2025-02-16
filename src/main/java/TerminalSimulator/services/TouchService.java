@@ -17,7 +17,7 @@ public class TouchService implements CommandService{
 
 	@Override
 	public Response execute(Request request) {
-		if (request.args.length < 1) {
+		if (request.args.length < 2) {
             return new Response("No args found", request.path);
         }
 		
@@ -26,7 +26,7 @@ public class TouchService implements CommandService{
 		
 		if(fileExists) return new Response("Already exists a file named as " + request.args[1], request.path);
 		
-		File emptyFile = new File(request.path, request.args[1], Application.database.getCurrentUser());
+		File emptyFile = new File(currentDir, request.args[1], Application.database.getCurrentUser());
 		
 		currentDir.addFile(emptyFile);
 		
