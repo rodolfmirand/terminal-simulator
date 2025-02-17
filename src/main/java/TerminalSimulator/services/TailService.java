@@ -15,10 +15,12 @@ import java.util.List;
 public class TailService implements CommandService {
     @Override
     public Response execute(Request request) {
+        // verifica ausência de argumentos
         if (request.args.length < 2) {
             return new Response("No file specified", request.path);
         }
 
+        //criação da variavel para armazenar qtde de linhas a mostrar
         int linesToShow;
 
         try {
@@ -30,16 +32,25 @@ public class TailService implements CommandService {
             return new Response("Invalid number format", request.path);
         }
 
+        // encontra o diretório atual a partir do caminho informado
         Directory currentDir = Application.database.findDirectory(new ArrayList<>(List.of(request.path.split("/"))));
+
+        // busca o arquivo no diretório atual
         File file = currentDir.findFile(request.args[2]);
+
+        // verifica se o arquivo existe
         if (file == null) {
             return new Response("File not found.", request.path);
         }
 
-        String formattedContent = file.getData().replace("\\n", "\n").replaceAll("\r\n|\n", "<br>");
-        String[] lines = formattedContent.split("<br>");
-        StringBuilder output = new StringBuilder();
+        // troca os \n por <br> para poder exibir o conteudo do arquivo
+        String formattedContent = file.getData().replace("\\n", "\n").replaceAll("\n", "<br>");
 
+        // divide o conteúdo em linhas
+        String[] lines = formattedContent.split("<br>");
+
+        // gera a saída com as últimas linhas
+        StringBuilder output = new StringBuilder();
         int startIndex = Math.max(0, lines.length - linesToShow);
         for (int i = startIndex; i < lines.length; i++) {
             output.append(lines[i]).append("\n");

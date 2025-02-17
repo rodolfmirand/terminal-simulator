@@ -2,7 +2,6 @@ package TerminalSimulator.controllers;
 
 import TerminalSimulator.models.dto.request.Request;
 import TerminalSimulator.models.dto.response.Response;
-import TerminalSimulator.services.CdService;
 import TerminalSimulator.services.RmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
