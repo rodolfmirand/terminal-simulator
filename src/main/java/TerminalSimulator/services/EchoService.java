@@ -22,18 +22,23 @@ public class EchoService implements CommandService {
 			return new Response(request.args[1], request.path);
 		}
 		
+		// Caso contrário se faz necessário 3 argumentos: Texto, (> ou >>), caminho do arquivo
 		if(request.args.length < 4) {
 			return new Response("No args found", request.path);
         }
 		
-		// Do contrário insere informação em arquivo
+		// Encontra o diretório atual a partir do caminho atual
 		Directory currentDir = Application.database.findDirectory(new ArrayList<>(List.of(request.path)));
+		
+		// Busca o arquivo no diretório atual
 		File file = currentDir.findFile(request.args[3]);
 		
+		// Se o arquivo não existir retorna mensagem de erro
 		if(file == null) {
 			return new Response("The file named as " + request.args[3] + " doesn't exists", request.path);
 		}
 		
+		// Com base na flag (> ou >>) irá adicionar ou concatenar o texto no arquivo
 		return switch(request.args[2]) {
 			case ">" -> this.overwriteFileContent(file, request.args[1], request.path);
 			case ">>"->  this.concatContentToFile(file, request.args[1], request.path);
@@ -42,6 +47,7 @@ public class EchoService implements CommandService {
 	}
 	
 	private Response overwriteFileContent(File file, String content, String path) {
+		// Atualiza o conteúdo e tamanho do arquivo
 		file.setData(content);
 		file.setBytesSize();
 		
@@ -49,6 +55,7 @@ public class EchoService implements CommandService {
 	}
 	
 	private Response concatContentToFile(File file, String content, String path) {
+		// Atualiza o conteúdo e tamanho do arquivo
 		file.setData(file.getData() + content);
 		file.setBytesSize();
 		
