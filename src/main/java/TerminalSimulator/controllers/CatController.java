@@ -1,5 +1,9 @@
 package TerminalSimulator.controllers;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 35d2b868b8d06258500369b656521fbd9199da14
 import TerminalSimulator.models.dto.request.Request;
 import TerminalSimulator.models.dto.response.Response;
 import TerminalSimulator.services.CatService;
