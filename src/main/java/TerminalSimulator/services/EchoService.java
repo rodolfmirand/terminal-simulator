@@ -28,7 +28,7 @@ public class EchoService implements CommandService {
         }
 		
 		// Encontra o diretório atual a partir do caminho atual
-		Directory currentDir = Application.database.findDirectory(new ArrayList<>(List.of(request.path)));
+		Directory currentDir = Application.database.findDirectory(new ArrayList<>(List.of(request.path.split("/"))));
 		
 		// Busca o arquivo no diretório atual
 		File file = currentDir.findFile(request.args[3]);

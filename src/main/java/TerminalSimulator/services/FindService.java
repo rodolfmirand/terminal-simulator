@@ -28,7 +28,7 @@ public class FindService implements CommandService {
 		}
 		
 		// Encontra o diretório atual a partir do caminho informado
-		Directory currentDir = Application.database.findDirectory(new ArrayList<>(List.of(request.args[1])));
+		Directory currentDir = Application.database.findDirectory(new ArrayList<>(List.of(request.args[1].split("/"))));
 		
 		// Procura pelo arquivo solicitado pelo usuário no diretório 
 		File file = currentDir.findFile(request.args[3]);
