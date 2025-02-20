@@ -17,7 +17,7 @@ public class MkDirService implements CommandService {
     public Response execute(Request request) {
 
         // verifica a ausência de argumentos
-        if(request.args.length < 1){
+        if(request.args.length <= 1){
             return new Response("Empty directory name.", request.path);
         }
 
