@@ -42,7 +42,7 @@ public class DuService implements CommandService {
         }
 
         // Retorna o tamanho em bytes do subdiretório encontrado, juntamente com a mensagem de sucesso
-        return new Response("Size: " + dir.getBytesSize() + " bytes", request.path);
+        return new Response("Size: " + dir.calculateSize() + " bytes", request.path);
 
     }
 }

@@ -43,11 +43,11 @@ public class StatService implements CommandService {
         // Verifica se o arquivo foi encontrado
         if (file != null) {
             // Retorna uma resposta com a representação do arquivo no formato 'ls', caso o arquivo seja encontrado
-            return new Response(file.toStringLs(), request.path);
+            return new Response(file.getFileInfo(), request.path);
         } else if (dir != null) {
             // Caso não tenha encontrado o arquivo, verifica se o diretório foi encontrado
             // Retorna uma resposta com a representação do diretório no formato 'ls', caso o diretório seja encontrado
-            return new Response(dir.toStringLs(), request.path);
+            return new Response(dir.getDirectoryInfo(), request.path);
         } else {
             // Caso nem o arquivo nem o diretório sejam encontrados, retorna uma mensagem de erro
             return new Response("File or directory not found", request.path);

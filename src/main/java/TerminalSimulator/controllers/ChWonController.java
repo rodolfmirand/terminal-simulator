@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/cmwon")
+@RequestMapping(path = "/chwon")
 public class ChWonController {
     @Autowired
     private ChWonService service;
